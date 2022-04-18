@@ -862,6 +862,9 @@ typedef struct
 	int			helpchanged;
 
 	qboolean	spectator;			// client is a spectator
+	int			magic;				// current magic amount
+	int			max_magic;			// maximum magic amount
+	int			fireballs;			// used for Spell_Fire
 } client_persistant_t;
 
 // client data that stays across deathmatch respawns
@@ -1109,5 +1112,9 @@ struct edict_s
 	// common data blocks
 	moveinfo_t		moveinfo;
 	monsterinfo_t	monsterinfo;
+
+	int			magic;			// current magic amount
+	int			max_magic;		// maximum magic amount
+	int			fireballs;		// used for Spell_Fire
 };
 

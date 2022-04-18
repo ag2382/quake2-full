@@ -914,3 +914,8 @@ void fire_bfg (edict_t *self, vec3_t start, vec3_t dir, int damage, int speed, f
 
 	gi.linkentity (bfg);
 }
+
+/*
+create new function to use for Spell_Fire
+shoot fireballs from the blaster
+*/

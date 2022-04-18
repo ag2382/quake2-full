@@ -181,7 +181,6 @@ void player_pain (edict_t *self, edict_t *other, float kick, int damage)
 	// player pain is handled at the end of the frame in P_DamageFeedback
 }
 
-
 qboolean IsFemale (edict_t *ent)
 {
 	char		*info;
@@ -625,6 +624,9 @@ void InitClientPersistant (gclient_t *client)
 	client->pers.max_grenades	= 50;
 	client->pers.max_cells		= 200;
 	client->pers.max_slugs		= 50;
+	
+	client->pers.magic			= 64;
+	client->pers.max_magic		= 64;	// starting magic amount (from Zelda II - The Adventure of Link)
 
 	client->pers.connected = true;
 }
@@ -665,10 +667,20 @@ void SaveClientData (void)
 	}
 }
 
+/*
+==================
+FetchClientData
+
+Key persistant defaults for client are loaded into the game
+==================
+*/
+
 void FetchClientEntData (edict_t *ent)
 {
 	ent->health = ent->client->pers.health;
 	ent->max_health = ent->client->pers.max_health;
+	ent->magic = ent->client->pers.magic;
+	ent->max_magic = ent->client->pers.max_magic;
 	ent->flags |= ent->client->pers.savedFlags;
 	if (coop->value)
 		ent->client->resp.score = ent->client->pers.score;
@@ -1612,6 +1624,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 		client->ps.pmove.gravity = sv_gravity->value;
 		pm.s = client->ps.pmove;
 
+		// NOT safe to manipulate
 		for (i=0 ; i<3 ; i++)
 		{
 			pm.s.origin[i] = ent->s.origin[i]*8;
@@ -1621,7 +1634,6 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 		if (memcmp(&client->old_pmove, &pm.s, sizeof(pm.s)))
 		{
 			pm.snapinitial = true;
-	//		gi.dprintf ("pmove changed!\n");
 		}
 
 		pm.cmd = *ucmd;
@@ -1636,6 +1648,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 		client->ps.pmove = pm.s;
 		client->old_pmove = pm.s;
 
+		// NOT safe to manipulate
 		for (i=0 ; i<3 ; i++)
 		{
 			ent->s.origin[i] = pm.s.origin[i]*0.125;
@@ -1649,9 +1662,10 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 		client->resp.cmd_angles[1] = SHORT2ANGLE(ucmd->angles[1]);
 		client->resp.cmd_angles[2] = SHORT2ANGLE(ucmd->angles[2]);
 
+		// WHERE JUMP PHYSICS HAPPEN
 		if (ent->groundentity && !pm.groundentity && (pm.cmd.upmove >= 10) && (pm.waterlevel == 0))
 		{
-			gi.sound(ent, CHAN_VOICE, gi.soundindex("*jump1.wav"), 1, ATTN_NORM, 0);
+			gi.sound(ent, CHAN_VOICE, gi.soundindex("*jump1.wav"), 1, ATTN_NORM, 0); // play jump sound
 			PlayerNoise(ent, ent->s.origin, PNOISE_SELF);
 		}
 

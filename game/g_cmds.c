@@ -899,6 +899,210 @@ void Cmd_PlayerList_f(edict_t *ent)
 	gi.cprintf(ent, PRINT_HIGH, "%s", text);
 }
 
+/*
+=================================
+MY ADDITIONS FOR SPELL HANDLING
+=================================
+*/
+
+/*
+==================
+Spell_Fire
+
+player shoots fireballs from sword;
+used for spell 'fire'
+==================
+*/
+
+//void Spell_Fire(edict_t* ent) {
+//
+	// find the weapon entity
+//
+	// assign the fireball mod to the weapon entity
+//
+// }
+
+/*
+==================
+Spell_Jump
+
+player function for doubling jump height;
+used for spell 'jump'
+==================
+*/
+
+void Spell_Jump(edict_t* ent) {
+	gi.dprintf("in Spell_Jump\n");
+ }
+
+/*
+==================
+Spell_Life
+
+player function for self-healing;
+get half of your maximum health back
+used for spell 'life'
+==================
+*/
+void Spell_Life(edict_t* ent) {
+	int diff, heal;
+	heal = ent->max_health / 2;		// amount of health to heal Link
+
+	// if additional health exceeds 100
+	if (ent->health + heal > 100) {
+		// only add remaining health; DO NOT exceed 100
+		diff = 100 - ent->health;
+		ent->health += diff;
+	}
+	else {
+		// add health as intended
+		ent->health += heal;
+	}
+}
+
+/*
+==================
+Spell_Shield
+
+player function to reduce sustained damage by half
+lasts for 15 seconds?
+used for spell 'shield'
+==================
+*/
+
+void Spell_Shield(edict_t* ent) {
+	gi.dprintf("in Spell_Shield\n");
+}
+
+/*
+==================
+Spell_Spell
+
+player function that turns enemies weak;
+used for spell 'spell'
+==================
+*/
+
+void Spell_Spell(edict_t* ent) {
+	gi.dprintf("in Spell_Spell\n");
+}
+
+/*
+==================
+Cmd_Spells
+
+use the command line to activate Link's spells
+==================
+*/
+void Cmd_Spells(edict_t* ent) {
+	int cost;
+	char* spell;
+	spell = gi.args();
+
+	// One method for each of Link's five spells
+	// fire, jump, life, shield, spell
+
+	// FIRE
+	if (Q_stricmp(spell, "fire") == 0) {
+		cost = 16;
+		// check if you have enough magic to cast the spell
+		if (ent->magic >= cost) {
+			gi.dprintf("Fire activated\n");
+			ent->magic -= cost;
+			// execute Spell_Fire function to shoot fireballs from Link's "sword"
+			//Spell_Fire(ent);
+
+		}
+		else {
+			gi.cprintf(ent, PRINT_HIGH, "NOT enough magic points to cast this spell\n");
+		}
+	}
+
+	// JUMP
+	// bind SPACE "+moveup" ~ refer to config file
+	else if (Q_stricmp(spell, "jump") == 0) {
+		cost = 8;
+		// check if you have enough magic to cast the spell
+		if (ent->magic >= cost) {
+			gi.dprintf("Jump activated\n");
+			ent->magic -= cost;
+			// execute Spell_Jump function to double Link's jump height
+			// Spell_Jump(ent);
+		}
+		else {
+			gi.cprintf(ent, PRINT_HIGH, "NOT enough magic points to cast this spell\n");
+		}
+	}
+
+	// LIFE
+	else if (Q_stricmp(spell, "life") == 0) {
+		cost = 50;
+		// check if you have enough magic to cast the spell
+		if (ent->magic >= cost) {
+			gi.dprintf("Life activated\n");
+			ent->magic -= cost;
+			// execute Spell_Life function to recover some of Link's health
+			Spell_Life(ent);
+		}
+		else {
+			gi.cprintf(ent, PRINT_HIGH, "NOT enough magic points to cast this spell\n");
+		}
+	}
+
+	// SHIELD - reduces the amount of damage Link takes by half
+	else if (Q_stricmp(spell, "shield") == 0) {
+		cost = 16;
+		// check if you have enough magic to cast the spell
+		if (ent->magic >= cost) {
+			gi.dprintf("Shield activated\n");
+			ent->magic -= cost;
+			// execute Spell_Shield function to reduce any damage Link takes by half
+			// Spell_Shield(ent);
+		}
+		else {
+			gi.cprintf(ent, PRINT_HIGH, "NOT enough magic points to cast this spell\n");
+		}
+	}
+
+	// SPELL
+	else if (Q_stricmp(spell, "spell") == 0) {
+		cost = 16;
+		// check if you have enough magic to cast the spell
+		if (ent->magic >= cost) {
+			gi.dprintf("Spell activated\n");
+			ent->magic -= cost;
+			// execute Spell_Spell function to make enemies weak; they cannot do damage
+			// Spell_Spell(ent);
+		}
+		else {
+			gi.dprintf("NOT enough magic points to cast this spell\n");
+		}
+	}
+
+	// if user does not input any spells on console, tell user how to activate them
+	else {
+		// info for user to cast spells
+		gi.dprintf("\nCURRENT MAGIC POINTS: %i\n", ent->magic);
+		gi.dprintf("CHOOSE FROM THESE 5 SPELLS:\n");
+		gi.dprintf("fire, jump, life, shield, spell\n\n");
+
+		// notify the user how much each spell costs
+		gi.dprintf("'fire' COSTS 16 POINTS\n");
+		gi.dprintf("'jump' COSTS 8 POINTS\n");
+		gi.dprintf("'life' COSTS 50 POINTS\n");
+		gi.dprintf("'shield' COSTS 16 POINTS\n");
+		gi.dprintf("'spell' COSTS 16 POINTS\n");
+
+		gi.dprintf("\nACTIVATE SPELLS USING THE FOLLOWING COMMAND:\n");
+		gi.dprintf("spell <name_of_spell>\n\n");
+	}
+}
+
+// for testing purposes
+void Cmd_RestoreMagic(edict_t* ent) {
+	ent->magic = ent->max_magic;
+	gi.dprintf("Magic has been restored!\n");
+}
 
 /*
 =================
@@ -943,50 +1147,54 @@ void ClientCommand (edict_t *ent)
 	if (level.intermissiontime)
 		return;
 
-	if (Q_stricmp (cmd, "use") == 0)
-		Cmd_Use_f (ent);
-	else if (Q_stricmp (cmd, "drop") == 0)
-		Cmd_Drop_f (ent);
-	else if (Q_stricmp (cmd, "give") == 0)
-		Cmd_Give_f (ent);
-	else if (Q_stricmp (cmd, "god") == 0)
-		Cmd_God_f (ent);
-	else if (Q_stricmp (cmd, "notarget") == 0)
-		Cmd_Notarget_f (ent);
-	else if (Q_stricmp (cmd, "noclip") == 0)
-		Cmd_Noclip_f (ent);
-	else if (Q_stricmp (cmd, "inven") == 0)
-		Cmd_Inven_f (ent);
-	else if (Q_stricmp (cmd, "invnext") == 0)
-		SelectNextItem (ent, -1);
-	else if (Q_stricmp (cmd, "invprev") == 0)
-		SelectPrevItem (ent, -1);
-	else if (Q_stricmp (cmd, "invnextw") == 0)
-		SelectNextItem (ent, IT_WEAPON);
-	else if (Q_stricmp (cmd, "invprevw") == 0)
-		SelectPrevItem (ent, IT_WEAPON);
-	else if (Q_stricmp (cmd, "invnextp") == 0)
-		SelectNextItem (ent, IT_POWERUP);
-	else if (Q_stricmp (cmd, "invprevp") == 0)
-		SelectPrevItem (ent, IT_POWERUP);
-	else if (Q_stricmp (cmd, "invuse") == 0)
-		Cmd_InvUse_f (ent);
-	else if (Q_stricmp (cmd, "invdrop") == 0)
-		Cmd_InvDrop_f (ent);
-	else if (Q_stricmp (cmd, "weapprev") == 0)
-		Cmd_WeapPrev_f (ent);
-	else if (Q_stricmp (cmd, "weapnext") == 0)
-		Cmd_WeapNext_f (ent);
-	else if (Q_stricmp (cmd, "weaplast") == 0)
-		Cmd_WeapLast_f (ent);
-	else if (Q_stricmp (cmd, "kill") == 0)
-		Cmd_Kill_f (ent);
-	else if (Q_stricmp (cmd, "putaway") == 0)
-		Cmd_PutAway_f (ent);
-	else if (Q_stricmp (cmd, "wave") == 0)
-		Cmd_Wave_f (ent);
+	if (Q_stricmp(cmd, "use") == 0)
+		Cmd_Use_f(ent);
+	else if (Q_stricmp(cmd, "drop") == 0)
+		Cmd_Drop_f(ent);
+	else if (Q_stricmp(cmd, "give") == 0)
+		Cmd_Give_f(ent);
+	else if (Q_stricmp(cmd, "god") == 0)
+		Cmd_God_f(ent);
+	else if (Q_stricmp(cmd, "notarget") == 0)
+		Cmd_Notarget_f(ent);
+	else if (Q_stricmp(cmd, "noclip") == 0)
+		Cmd_Noclip_f(ent);
+	else if (Q_stricmp(cmd, "inven") == 0)
+		Cmd_Inven_f(ent);
+	else if (Q_stricmp(cmd, "invnext") == 0)
+		SelectNextItem(ent, -1);
+	else if (Q_stricmp(cmd, "invprev") == 0)
+		SelectPrevItem(ent, -1);
+	else if (Q_stricmp(cmd, "invnextw") == 0)
+		SelectNextItem(ent, IT_WEAPON);
+	else if (Q_stricmp(cmd, "invprevw") == 0)
+		SelectPrevItem(ent, IT_WEAPON);
+	else if (Q_stricmp(cmd, "invnextp") == 0)
+		SelectNextItem(ent, IT_POWERUP);
+	else if (Q_stricmp(cmd, "invprevp") == 0)
+		SelectPrevItem(ent, IT_POWERUP);
+	else if (Q_stricmp(cmd, "invuse") == 0)
+		Cmd_InvUse_f(ent);
+	else if (Q_stricmp(cmd, "invdrop") == 0)
+		Cmd_InvDrop_f(ent);
+	else if (Q_stricmp(cmd, "weapprev") == 0)
+		Cmd_WeapPrev_f(ent);
+	else if (Q_stricmp(cmd, "weapnext") == 0)
+		Cmd_WeapNext_f(ent);
+	else if (Q_stricmp(cmd, "weaplast") == 0)
+		Cmd_WeapLast_f(ent);
+	else if (Q_stricmp(cmd, "kill") == 0)
+		Cmd_Kill_f(ent);
+	else if (Q_stricmp(cmd, "putaway") == 0)
+		Cmd_PutAway_f(ent);
+	else if (Q_stricmp(cmd, "wave") == 0)
+		Cmd_Wave_f(ent);
 	else if (Q_stricmp(cmd, "playerlist") == 0)
 		Cmd_PlayerList_f(ent);
+	else if (Q_stricmp(cmd, "spell") == 0)
+		Cmd_Spells(ent);
+	else if (Q_stricmp(cmd, "restoremagic") == 0)
+		Cmd_RestoreMagic(ent);
 	else	// anything that doesn't match a command will be a chat
 		Cmd_Say_f (ent, false, true);
 }

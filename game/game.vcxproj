@@ -85,7 +85,7 @@
     <IntDir>.\release\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <TargetName>gamex86</TargetName>
-    <OutDir>.\release</OutDir>
+    <OutDir>..\..\..\..\..\Games\SteamLibrary\steamapps\common\Quake 2\q2zelda</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'">
     <OutDir>.\..\ReleaseAXP\</OutDir>
