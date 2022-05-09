@@ -74,7 +74,7 @@ Therefore, the player will only restore 30 health points instead of 50.
 ## SHIELD <img src = "https://user-images.githubusercontent.com/90282143/167358395-8bf3579b-dd50-4961-b0de-4fb9beafe7a0.png" width="35" height="35"> <br />
 The 'shield' spell is an ability that increases the player's defensive abilities. It reduces the damage the player takes by half. Enemy fire, self-damage from inventory weapons, fall height, etc.
 
-Example scenario: player holds grenade in their hand
+Example Scenario: player holds grenade in their hand
 
 Default:<br />
 <img src = "https://user-images.githubusercontent.com/90282143/167369585-dae209d3-0e53-4669-a5f9-b8f4458876fd.png" width="500" height="375"> <br />
