@@ -58,7 +58,9 @@ Spell Activation:<br />
 
 
 ## LIFE <img src = "https://user-images.githubusercontent.com/90282143/167358369-dd026533-2177-4f59-884f-6d635e127be5.png" width="35" height="35"> <br />
-The 'life' spell recovers some of the player's health (by 50 to be exact). This is the spell that uses the most of the player's magic points. Health recoveries will not exceed the maximum health value defined by the game, which is 100. For example, imagine a scenario where the player wants to use this spell at 70 health points. Since the player's maximum health cannot exceed 100, the amount of health the player gets back after using the spell can be obtained with this formula:
+The 'life' spell recovers some of the player's health (by 50 to be exact). It has the highest magic cost out of all the spells. 
+
+Health recoveries will not exceed the maximum health value defined by the game, which is 100. For example, imagine a scenario where the player wants to use this spell at 70 health points. Since the player's maximum health cannot exceed 100, the amount of health the player gets back after using the spell can be obtained with this formula:
 
 heal_amount = max_health - curr_health <br />
 100 - 70 = 30
