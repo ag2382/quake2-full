@@ -25,19 +25,24 @@ Players can choose from 5 different spells to activate during a playthrough, eac
 
 The player starts off with 64 magic points, the default amount that Link has in the beginning of Zelda II. Each spell will be occupied with a description, followed by in-game screenshots to showcase their functionality.
 
-* FIRE <img src = "https://user-images.githubusercontent.com/90282143/167357467-9837de00-9236-4491-b7a4-3ea8f9c37bd0.png" width = "35" height = "35"> <br />
+* FIRE <br /> 
+<img src = "https://user-images.githubusercontent.com/90282143/167357467-9837de00-9236-4491-b7a4-3ea8f9c37bd0.png" width = "50" height = "50"> <br />
 The 'fire' spell allows the player to shoot fireballs out of the sword from a distance. In the context of Quake II, the particles shot from the BFG are used to portray Link's fireballs.
 
-* JUMP <img src = "https://user-images.githubusercontent.com/90282143/167358229-70b3dd42-8935-44a3-bae2-0c60232a0505.png" width = "35" height = "35"> <br />
+* JUMP <br />
+<img src = "https://user-images.githubusercontent.com/90282143/167358229-70b3dd42-8935-44a3-bae2-0c60232a0505.png" width = "50" height = "50"> <br />
 
 
-* LIFE <img src = "https://user-images.githubusercontent.com/90282143/167358369-dd026533-2177-4f59-884f-6d635e127be5.png" width = "35" height = "35"> <br />
+* LIFE <br />
+<img src = "https://user-images.githubusercontent.com/90282143/167358369-dd026533-2177-4f59-884f-6d635e127be5.png" width = "50" height = "50"> <br />
 
 
-* SHIELD <img src = "https://user-images.githubusercontent.com/90282143/167358395-8bf3579b-dd50-4961-b0de-4fb9beafe7a0.png" width = "35" height = "35"> <br />
+* SHIELD <br />
+<img src = "https://user-images.githubusercontent.com/90282143/167358395-8bf3579b-dd50-4961-b0de-4fb9beafe7a0.png" width = "50" height = "50"> <br />
 
 
-* SPELL <img src = "https://user-images.githubusercontent.com/90282143/167358419-2c934e31-40ce-47c1-b820-f4484006d0b4.png" width = "35" height = "35"> <br />
+* SPELL <br /> 
+<img src = "https://user-images.githubusercontent.com/90282143/167358419-2c934e31-40ce-47c1-b820-f4484006d0b4.png" width = "50" height = "50"> <br />
 
 
 ### Implement shop, with rupees as main source of currency
