@@ -23,7 +23,8 @@ The blaster has been replaced by the master sword. Each time you shoot the blast
 
 Not fully implemented yet :(
 
-## 5 spells to cast
+## 5 Spells to cast
+
 Players can choose from 5 different spells to activate during a playthrough, each with its own specified cost. Four of these spells have a set duration for 15 seconds: <br />
 * FIRE
 * JUMP
@@ -80,7 +81,7 @@ Here, the player takes 29 damage.<br />
 
 ## SPELL (WIP) <img src = "https://user-images.githubusercontent.com/90282143/167358419-2c934e31-40ce-47c1-b820-f4484006d0b4.png" width="35" height="35"> <br />
 
-  The 'spell' spell allows the player to turn several enemies into Barracuda sharks. It has not been fully implemented yet.
+  The 'spell' spell allows the player to turn several enemies into much weaker ones. It has not been fully implemented yet.
 
 ## Shop + Rupees  <img src = "https://user-images.githubusercontent.com/90282143/167375390-3a15d353-fa5b-404f-997e-49a61d67772a.png" width="23" height="30"> <br />
 
