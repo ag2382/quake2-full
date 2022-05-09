@@ -19,7 +19,7 @@ This mod changes Quake II to make it play more like a game from Nintendo's iconi
 ### Upgradable weapons
 
 ### 5 spells to cast
-Players can choose from 5 different spells to activate during a playthrough, each with its own specified cost. The spell system is derived from "Zelda II: The Adventure of Link" To see how this system works in more detail, open the console by pressing tilde (~) and type 'spell'. You should see the following:
+Players can choose from 5 different spells to activate during a playthrough, each with its own specified cost. Four of these spells have a set duration for 15 seconds. All spells include custom UI elements that are fully functional in-game. The spell system is derived from "Zelda II: The Adventure of Link". To see how this system works in more detail, open the console by pressing tilde (~) and type 'spell'. You should see the following:
 
 ![image](https://user-images.githubusercontent.com/90282143/167352895-158aae8b-4fd3-42d3-b364-92eb1a03d1c4.png)
 
@@ -27,12 +27,23 @@ The player starts off with 64 magic points, the default amount that Link has in 
 
 * FIRE <br />
 ![image](https://user-images.githubusercontent.com/90282143/167354547-69ac80e6-d6ec-459e-8db5-1e511ba8d812.png) <br />
-The 'fire' spell allows the player to shoot fireballs out of the sword from a distance.
+The 'fire' spell allows the player to shoot fireballs out of the sword from a distance. In the context of Quake II, the particles shot from the BFG are used to portray Link's fireballs.
 
-* JUMP
-* LIFE
-* SHIELD
-* SPELL
+* JUMP <br />
+![image](https://user-images.githubusercontent.com/90282143/167356941-f19b8dcf-07e6-45fd-bc7a-5bdda1118803.png)
+
+
+* LIFE <br />
+![image](https://user-images.githubusercontent.com/90282143/167357160-bad759af-77d7-407c-8bff-bf2d9fd1a86e.png)
+
+
+* SHIELD <br />
+![image](https://user-images.githubusercontent.com/90282143/167357215-b0378adf-0894-4740-b8dc-70d72ddf8365.png)
+
+
+* SPELL [WIP] <br />
+![image](https://user-images.githubusercontent.com/90282143/167357318-7569d747-6f9d-4af8-82e7-3ed950807b66.png)
+
 
 ### Implement shop, with rupees as main source of currency
 
