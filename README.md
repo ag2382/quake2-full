@@ -14,6 +14,7 @@ This mod changes Quake II to make it play more like a game from Nintendo's iconi
 ## Project Deliverables
 
 ### Replace Quake II weapons with Zelda weapons
+* The blaster has been replaced by the master sword. Each time you shoot the blaster, the bolt acts as a "sword beam". This is one of Link's recurring sword skills in the Zelda series. The bolt now disappears after travelling a set distance from the player, given that it does not hit any surface or entity. [WIP]
 
 ### Upgradable weapons
 
@@ -26,7 +27,7 @@ The player starts off with 64 magic points, the default amount that Link has in 
 
 * FIRE <br />
 ![image](https://user-images.githubusercontent.com/90282143/167354547-69ac80e6-d6ec-459e-8db5-1e511ba8d812.png) <br />
-This
+The 'fire' spell allows the player to shoot fireballs out of the sword from a distance.
 
 * JUMP
 * LIFE
