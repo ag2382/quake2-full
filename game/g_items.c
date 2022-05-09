@@ -350,7 +350,7 @@ void Use_Quad (edict_t *ent, gitem_t *item)
 	}
 	else
 	{
-		timeout = 300;
+		timeout = 150;
 	}
 
 	if (ent->client->quad_framenum > level.framenum)
@@ -440,6 +440,10 @@ qboolean Pickup_Key (edict_t *ent, edict_t *other)
 	}
 	other->client->pers.inventory[ITEM_INDEX(ent->item)]++;
 	return true;
+}
+
+qboolean Pickup_Rupees(edict_t* ent, edict_t* other) {
+	other->client->pers.rupees++;
 }
 
 //======================================================================
@@ -1306,7 +1310,7 @@ always owned, never in the world
 		WEAP_BLASTER,
 		NULL,
 		0,
-/* precache */ "weapons/blastf1a.wav misc/lasfly.wav"
+/* precache */ "weapons/blastf1a.wav weapons/hyprbl1a.wav misc/lasfly.wav"
 	},
 
 /*QUAKED weapon_shotgun (.3 .3 1) (-16 -16 -16) (16 16 16)
@@ -2112,6 +2116,29 @@ tank commander's head
 	},
 
 	// end of list marker
+
+	// RUPEE IMPLEMENTATION ~ Link's currency
+	{
+		"currency_rupees",	//classname
+		Pickup_Rupees, // pickup function
+		NULL, // use function
+		NULL, // drop function
+		NULL, // weaponthink function
+		"items/pkup_rupee.wav",// pickup sound
+		"models/items/armor/shard/tris.md2", 0, // world_model and its flags
+		NULL, // view model
+
+		"i_rupees", // icon
+		"Rupees", // pickup name
+		3, // count_width
+		0, // quantity
+		NULL, // ammo
+		0, // flags
+		0, // weapmodel
+		NULL, // info
+		0, // tag
+		/*precache*/ ""
+	},
 	{NULL}
 };
 

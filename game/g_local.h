@@ -69,7 +69,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define FL_POWER_ARMOR			0x00001000	// power armor (if any) is active
 #define FL_RESPAWN				0x80000000	// used for item respawning
 
-
 #define	FRAMETIME		0.1
 
 // memory tags to allow dynamic memory to be cleaned up
@@ -217,6 +216,7 @@ typedef struct
 #define IT_STAY_COOP	8
 #define IT_KEY			16
 #define IT_POWERUP		32
+#define IT_SPELL		64
 
 // gitem_t->weapmodel for weapons indicates model index
 #define WEAP_BLASTER			1 
@@ -338,6 +338,7 @@ typedef struct
 	int			body_que;			// dead bodies
 
 	int			power_cubes;		// ugly necessity for coop
+
 } level_locals_t;
 
 
@@ -595,7 +596,6 @@ typedef struct
 extern	field_t fields[];
 extern	gitem_t	itemlist[];
 
-
 //
 // g_cmds.c
 //
@@ -728,6 +728,7 @@ qboolean fire_hit (edict_t *self, vec3_t aim, int damage, int kick);
 void fire_bullet (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick, int hspread, int vspread, int mod);
 void fire_shotgun (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick, int hspread, int vspread, int count, int mod);
 void fire_blaster (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int speed, int effect, qboolean hyper);
+void fireball_blaster(edict_t* self, vec3_t start, vec3_t aimdir, int damage, int speed, int effect, qboolean hyper);
 void fire_grenade (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int speed, float timer, float damage_radius);
 void fire_grenade2 (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int speed, float timer, float damage_radius, qboolean held);
 void fire_rocket (edict_t *self, vec3_t start, vec3_t dir, int damage, int speed, float damage_radius, int radius_damage);
@@ -865,6 +866,7 @@ typedef struct
 	int			magic;				// current magic amount
 	int			max_magic;			// maximum magic amount
 	int			fireballs;			// used for Spell_Fire
+	int			rupees;				// Zelda currency
 } client_persistant_t;
 
 // client data that stays across deathmatch respawns
@@ -962,6 +964,24 @@ struct gclient_s
 
 	edict_t		*chase_target;		// player we are chasing
 	qboolean	update_chase;		// need to update chase info?
+	
+	/*
+	==================
+	Additional vars for player-activated spells requiring a set duration.
+	==================
+	*/
+
+	qboolean	fire_sp;			// used for Link's 'fire' spell;
+	qboolean	jump_sp;			// used for Link's 'jump' spell
+	qboolean	shield_sp;			// used for Link's 'shield' spell
+	qboolean	spell_sp;			// used for Link's 'spell' spell
+
+	// spell timers
+	float		fire_framenum;
+	float		jump_framenum;
+	float		shield_framenum;
+	float		spell_framenum;
+
 };
 
 
@@ -1115,6 +1135,5 @@ struct edict_s
 
 	int			magic;			// current magic amount
 	int			max_magic;		// maximum magic amount
-	int			fireballs;		// used for Spell_Fire
 };
 

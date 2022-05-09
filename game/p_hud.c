@@ -303,6 +303,10 @@ void HelpComputer (edict_t *ent)
 {
 	char	string[1024];
 	char	*sk;
+	char	*aid;
+	char	*modname;
+	char	*desc1;
+	char	*desc2;
 
 	if (skill->value == 0)
 		sk = "easy";
@@ -313,21 +317,28 @@ void HelpComputer (edict_t *ent)
 	else
 		sk = "hard+";
 
+	// additions to remind player that they are playing a Quake 2 mod
+	aid = "MOD";
+	modname = "Quake 2: Zelda Edition!";
+
+	desc1 = "Quake weapons have been\nmodified to reflect some\n of Link's own.";
+	desc2 = "You can also cast spells,\nlike in Zelda II. Type\n'spell' in the console\n to test it out.";
+
 	// send the layout
 	Com_sprintf (string, sizeof(string),
 		"xv 32 yv 8 picn help "			// background
 		"xv 202 yv 12 string2 \"%s\" "		// skill
 		"xv 0 yv 24 cstring2 \"%s\" "		// level name
 		"xv 0 yv 54 cstring2 \"%s\" "		// help 1
-		"xv 0 yv 110 cstring2 \"%s\" "		// help 2
-		"xv 50 yv 164 string2 \" kills     goals    secrets\" "
-		"xv 50 yv 172 string2 \"%3i/%3i     %i/%i       %i/%i\" ", 
-		sk,
-		level.level_name,
-		game.helpmessage1,
-		game.helpmessage2,
+		"xv 0 yv 107 cstring2 \"%s\" "		// help 2
+		"xv 50 yv 164 string2 \" kills     rupees   secrets\" "
+		"xv 50 yv 172 string2 \"%3i/%3i      %i        %i/%i\" ", 
+		aid,
+		modname,
+		desc1,
+		desc2,
 		level.killed_monsters, level.total_monsters, 
-		level.found_goals, level.total_goals,
+		ent->client->pers.rupees,
 		level.found_secrets, level.total_secrets);
 
 	gi.WriteByte (svc_layout);
@@ -465,6 +476,47 @@ void G_SetStats (edict_t *ent)
 	{
 		ent->client->ps.stats[STAT_TIMER_ICON] = gi.imageindex ("p_rebreather");
 		ent->client->ps.stats[STAT_TIMER] = (ent->client->breather_framenum - level.framenum)/10;
+	}
+
+	/*
+	==================
+	ADDITIONS FOR SPELL HANDLING
+	==================
+	*/
+
+	// FIRE
+	else if (ent->client->fire_framenum > level.framenum)
+	{
+		ent->client->ps.stats[STAT_TIMER_ICON] = gi.imageindex("sp_fire");
+		ent->client->ps.stats[STAT_TIMER] = (ent->client->fire_framenum - level.framenum) / 10;
+		if (ent->client->ps.stats[STAT_TIMER] == 0)		// once the timer runs out
+			ent->client->fire_sp = 0;					// revert back to default
+	}
+
+	// JUMP
+	else if (ent->client->jump_framenum > level.framenum)
+	{
+		ent->client->ps.stats[STAT_TIMER_ICON] = gi.imageindex("sp_jump");
+		ent->client->ps.stats[STAT_TIMER] = (ent->client->jump_framenum - level.framenum) / 10;
+		if (ent->client->ps.stats[STAT_TIMER] == 0) 	// once the timer runs out
+			ent->client->jump_sp = 0;					// revert back to default
+	}
+
+	// SHIELD
+	else if (ent->client->shield_framenum > level.framenum)
+	{
+		ent->client->ps.stats[STAT_TIMER_ICON] = gi.imageindex("sp_shield");
+		ent->client->ps.stats[STAT_TIMER] = (ent->client->shield_framenum - level.framenum) / 10;
+		if (ent->client->ps.stats[STAT_TIMER] == 0) 		// once the timer runs out
+			ent->client->shield_sp = 0;						// revert back to default
+	}
+	// SPELL
+	else if (ent->client->spell_framenum > level.framenum)
+	{
+		ent->client->ps.stats[STAT_TIMER_ICON] = gi.imageindex("sp_spell");
+		ent->client->ps.stats[STAT_TIMER] = (ent->client->spell_framenum - level.framenum) / 10;
+		if (ent->client->ps.stats[STAT_TIMER] == 0) 	// once the timer runs out
+			ent->client->spell_sp = 0;					// revert back to default
 	}
 	else
 	{

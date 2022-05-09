@@ -382,6 +382,7 @@ void T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t dir,
 	int			asave;
 	int			psave;
 	int			te_sparks;
+	double		dec;
 
 	if (!targ->takedamage)
 		return;
@@ -402,12 +403,15 @@ void T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t dir,
 	meansOfDeath = mod;
 
 	// easy mode takes half damage
-	if (skill->value == 0 && deathmatch->value == 0 && targ->client)
+	// But, do Zelda games REALLY need an easy mode?? :O
+	
+	/*if (skill->value == 0 && deathmatch->value == 0 && targ->client)
 	{
 		damage *= 0.5;
 		if (!damage)
 			damage = 1;
-	}
+	}*/
+	// medium and hard modes take normal damage
 
 	client = targ->client;
 
@@ -446,7 +450,6 @@ void T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t dir,
 			VectorAdd (targ->velocity, kvel, targ->velocity);
 		}
 	}
-
 	take = damage;
 	save = 0;
 
@@ -546,7 +549,7 @@ T_RadiusDamage
 */
 void T_RadiusDamage (edict_t *inflictor, edict_t *attacker, float damage, edict_t *ignore, float radius, int mod)
 {
-	float	points;
+	float	points, dam;
 	edict_t	*ent = NULL;
 	vec3_t	v;
 	vec3_t	dir;
@@ -562,14 +565,27 @@ void T_RadiusDamage (edict_t *inflictor, edict_t *attacker, float damage, edict_
 		VectorMA (ent->s.origin, 0.5, v, v);
 		VectorSubtract (inflictor->s.origin, v, v);
 		points = damage - 0.5 * VectorLength (v);
-		if (ent == attacker)
-			points = points * 0.5;
+		dam = points;		// used for shield spell
+		if (ent == attacker) {
+			if (attacker->client->shield_sp == 1) {		// if shield spell is active for the client
+				dam = dam * 0.25;						// calculate damage reduction
+				points = dam * 2;						// revert for knockback value
+			}
+			else
+				points = points * 0.5;
+		}
 		if (points > 0)
 		{
 			if (CanDamage (ent, inflictor))
 			{
 				VectorSubtract (ent->s.origin, inflictor->s.origin, dir);
-				T_Damage (ent, inflictor, attacker, dir, inflictor->s.origin, vec3_origin, (int)points, (int)points, DAMAGE_RADIUS, mod);
+				// if shield spell is active
+				if (attacker->client->shield_sp == 1)
+					// reduce only damage taken, NOT knockback
+					T_Damage(ent, inflictor, attacker, dir, inflictor->s.origin, vec3_origin, (int)dam, (int)points, DAMAGE_RADIUS, mod);
+				else
+					// default
+					T_Damage (ent, inflictor, attacker, dir, inflictor->s.origin, vec3_origin, (int)points, (int)points, DAMAGE_RADIUS, mod);
 			}
 		}
 	}

@@ -310,7 +310,7 @@ void blaster_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *
 	if (other == self->owner)
 		return;
 
-	if (surf && (surf->flags & SURF_SKY))
+	if (surf && (surf->flags & SURF_SKY))		// bolt reaches skybox
 	{
 		G_FreeEdict (self);
 		return;
@@ -335,7 +335,7 @@ void blaster_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *
 		if (!plane)
 			gi.WriteDir (vec3_origin);
 		else
-			gi.WriteDir (plane->normal);
+			gi.WriteDir(plane->normal);
 		gi.multicast (self->s.origin, MULTICAST_PVS);
 	}
 
@@ -356,6 +356,7 @@ void fire_blaster (edict_t *self, vec3_t start, vec3_t dir, int damage, int spee
 	// (blaster/hyperblaster shots), the player won't be solid clipped against
 	// the object.  Right now trying to run into a firing hyperblaster
 	// is very jerky since you are predicted 'against' the shots.
+
 	VectorCopy (start, bolt->s.origin);
 	VectorCopy (start, bolt->s.old_origin);
 	vectoangles (dir, bolt->s.angles);
@@ -381,7 +382,12 @@ void fire_blaster (edict_t *self, vec3_t start, vec3_t dir, int damage, int spee
 	if (self->client)
 		check_dodge (self, bolt->s.origin, dir, speed);
 
+	// changes position of bolt shot from blaster
+	/*for (int i = 0; i < 3; i++)
+		bolt->s.origin[i] -= 10.0;*/
+
 	tr = gi.trace (self->s.origin, NULL, NULL, bolt->s.origin, bolt, MASK_SHOT);
+
 	if (tr.fraction < 1.0)
 	{
 		VectorMA (bolt->s.origin, -10, dir, bolt->s.origin);
@@ -919,3 +925,50 @@ void fire_bfg (edict_t *self, vec3_t start, vec3_t dir, int damage, int speed, f
 create new function to use for Spell_Fire
 shoot fireballs from the blaster
 */
+
+//void fireball_blaster(edict_t* self, vec3_t start, vec3_t dir, int damage, int speed, int effect, qboolean hyper)
+//{
+//	edict_t* fireball;
+//	trace_t	tr;
+//
+//	VectorNormalize(dir);
+//
+//	fireball = G_Spawn();
+//	fireball->svflags = SVF_DEADMONSTER;
+//	// yes, I know it looks weird that projectiles are deadmonsters
+//	// what this means is that when prediction is used against the object
+//	// (blaster/hyperblaster shots), the player won't be solid clipped against
+//	// the object.  Right now trying to run into a firing hyperblaster
+//	// is very jerky since you are predicted 'against' the shots.
+//	VectorCopy(start, fireball->s.origin);
+//	VectorCopy(start, fireball->s.old_origin);
+//	vectoangles(dir, fireball->s.angles);
+//	VectorScale(dir, speed, fireball->velocity);
+//	fireball->movetype = MOVETYPE_FLYMISSILE;
+//	fireball->clipmask = MASK_SHOT;
+//	fireball->solid = SOLID_BBOX;
+//	fireball->s.effects |= effect | EF_ANIM_ALLFAST;
+//	VectorClear(fireball->mins);
+//	VectorClear(fireball->maxs);
+//	fireball->s.modelindex = gi.modelindex("sprites/s_bfg1.sp2");
+//	fireball->s.sound = gi.soundindex("weapons/rockfly.wav");
+//	fireball->owner = self;
+//	fireball->touch = blaster_touch;
+//	fireball->nextthink = level.time + 2;
+//	fireball->think = G_FreeEdict;
+//	fireball->dmg = damage;
+//	fireball->classname = "fireball";
+//	if (hyper)
+//		fireball->spawnflags = 1;
+//	gi.linkentity(fireball);
+//
+//	if (self->client)
+//		check_dodge(self, fireball->s.origin, dir, speed);
+//
+//	tr = gi.trace(self->s.origin, NULL, NULL, fireball->s.origin, fireball, MASK_SHOT);
+//	if (tr.fraction < 1.0)
+//	{
+//		VectorMA(fireball->s.origin, -10, dir, fireball->s.origin);
+//		fireball->touch(fireball, tr.ent, NULL, NULL);
+//	}
+//}

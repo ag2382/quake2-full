@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 #include "m_player.h"
 
+static int sp_jump_timeout;
 
 char *ClientTeam (edict_t *ent)
 {
@@ -905,6 +906,8 @@ MY ADDITIONS FOR SPELL HANDLING
 =================================
 */
 
+#define SPL_DURATION			3.0		// used to measure a spell's duration
+
 /*
 ==================
 Spell_Fire
@@ -914,13 +917,25 @@ used for spell 'fire'
 ==================
 */
 
-//void Spell_Fire(edict_t* ent) {
-//
-	// find the weapon entity
-//
-	// assign the fireball mod to the weapon entity
-//
-// }
+void Fire_Active(edict_t* ent) {
+
+	if (ent->client->fire_framenum > level.framenum) {
+		ent->client->fire_framenum += 150;
+	}
+	else {
+		ent->client->fire_framenum = level.framenum + 150;
+	}
+	gi.sound(ent, CHAN_ITEM, gi.soundindex("items/activate_spell.wav"), 1, ATTN_NORM, 0);
+}
+
+void Spell_Fire(edict_t* ent) {
+
+	ent->client->fire_sp = 1;
+	gi.dprintf("Link can now shoot fireballs out of his sword\n");
+
+	// spell timer
+	Fire_Active(ent);
+ }
 
 /*
 ==================
@@ -931,8 +946,24 @@ used for spell 'jump'
 ==================
 */
 
-void Spell_Jump(edict_t* ent) {
-	gi.dprintf("in Spell_Jump\n");
+void Jump_Active(edict_t* ent) {
+
+	if (ent->client->jump_framenum > level.framenum) {
+		ent->client->jump_framenum += 150;
+	}
+	else {
+		ent->client->jump_framenum = level.framenum + 150;
+	}
+	gi.sound(ent, CHAN_ITEM, gi.soundindex("items/activate_spell.wav"), 1, ATTN_NORM, 0);
+}
+
+void Spell_Jump(edict_t* ent) {					// Acting on an entity
+
+	ent->client->jump_sp = 1;				// activate the spell
+	gi.dprintf("Link can now jump higher\n");
+
+	// spell timer
+	Jump_Active(ent);
  }
 
 /*
@@ -944,20 +975,17 @@ get half of your maximum health back
 used for spell 'life'
 ==================
 */
-void Spell_Life(edict_t* ent) {
+void Spell_Life(edict_t* ent) {		// acting on an entity
 	int diff, heal;
 	heal = ent->max_health / 2;		// amount of health to heal Link
 
-	// if additional health exceeds 100
-	if (ent->health + heal > 100) {
-		// only add remaining health; DO NOT exceed 100
-		diff = 100 - ent->health;
+	if (ent->health + heal > 100) {			// if additional health exceeds 100
+		diff = 100 - ent->health;			// only add remaining health; DO NOT exceed 100
 		ent->health += diff;
 	}
-	else {
-		// add health as intended
-		ent->health += heal;
-	}
+	else
+		ent->health += heal;				// add health as intended
+	gi.sound(ent, CHAN_ITEM, gi.soundindex("items/heal_spell.wav"), 1, ATTN_NORM, 0);
 }
 
 /*
@@ -965,13 +993,28 @@ void Spell_Life(edict_t* ent) {
 Spell_Shield
 
 player function to reduce sustained damage by half
-lasts for 15 seconds?
 used for spell 'shield'
 ==================
 */
 
+void Shield_Active(edict_t* ent) {
+
+	if (ent->client->shield_framenum > level.framenum) {
+		ent->client->shield_framenum += 150;
+	}
+	else {
+		ent->client->shield_framenum = level.framenum + 150;
+	}
+	gi.sound(ent, CHAN_ITEM, gi.soundindex("items/activate_spell.wav"), 1, ATTN_NORM, 0);
+}
+
 void Spell_Shield(edict_t* ent) {
-	gi.dprintf("in Spell_Shield\n");
+
+	ent->client->shield_sp = 1;
+	gi.dprintf("Link's damage taken has now been reduced by half\n");
+
+	// spell timer
+	Shield_Active(ent);
 }
 
 /*
@@ -983,8 +1026,24 @@ used for spell 'spell'
 ==================
 */
 
+void Spell_Active(edict_t* ent) {
+
+	if (ent->client->spell_framenum > level.framenum) {
+		ent->client->spell_framenum += 150;
+	}
+	else {
+		ent->client->spell_framenum = level.framenum + 150;
+	}
+	gi.sound(ent, CHAN_ITEM, gi.soundindex("items/activate_spell.wav"), 1, ATTN_NORM, 0);
+}
+
 void Spell_Spell(edict_t* ent) {
-	gi.dprintf("in Spell_Spell\n");
+
+	ent->client->spell_sp = 1;
+	gi.dprintf("Link can turn enemies into bots\n");
+
+	// spell timer
+	Spell_Active(ent);
 }
 
 /*
@@ -999,8 +1058,12 @@ void Cmd_Spells(edict_t* ent) {
 	char* spell;
 	spell = gi.args();
 
-	// One method for each of Link's five spells
-	// fire, jump, life, shield, spell
+	/*
+	==================
+	One method for each of Link's five spells:
+	FIRE, JUMP, LIFE, SHIELD, SPELL
+	==================
+	*/
 
 	// FIRE
 	if (Q_stricmp(spell, "fire") == 0) {
@@ -1010,7 +1073,7 @@ void Cmd_Spells(edict_t* ent) {
 			gi.dprintf("Fire activated\n");
 			ent->magic -= cost;
 			// execute Spell_Fire function to shoot fireballs from Link's "sword"
-			//Spell_Fire(ent);
+			Spell_Fire(ent);
 
 		}
 		else {
@@ -1027,7 +1090,7 @@ void Cmd_Spells(edict_t* ent) {
 			gi.dprintf("Jump activated\n");
 			ent->magic -= cost;
 			// execute Spell_Jump function to double Link's jump height
-			// Spell_Jump(ent);
+			Spell_Jump(ent);
 		}
 		else {
 			gi.cprintf(ent, PRINT_HIGH, "NOT enough magic points to cast this spell\n");
@@ -1057,10 +1120,10 @@ void Cmd_Spells(edict_t* ent) {
 			gi.dprintf("Shield activated\n");
 			ent->magic -= cost;
 			// execute Spell_Shield function to reduce any damage Link takes by half
-			// Spell_Shield(ent);
+			 Spell_Shield(ent);
 		}
 		else {
-			gi.cprintf(ent, PRINT_HIGH, "NOT enough magic points to cast this spell\n");
+			gi.cprintf(ent, PRINT_HIGH, "NOT ENOUGH MAGIC POINTS TO CAST THIS SPELL!\n");
 		}
 	}
 
@@ -1072,7 +1135,7 @@ void Cmd_Spells(edict_t* ent) {
 			gi.dprintf("Spell activated\n");
 			ent->magic -= cost;
 			// execute Spell_Spell function to make enemies weak; they cannot do damage
-			// Spell_Spell(ent);
+			 Spell_Spell(ent);
 		}
 		else {
 			gi.dprintf("NOT enough magic points to cast this spell\n");
@@ -1095,13 +1158,22 @@ void Cmd_Spells(edict_t* ent) {
 
 		gi.dprintf("\nACTIVATE SPELLS USING THE FOLLOWING COMMAND:\n");
 		gi.dprintf("spell <name_of_spell>\n\n");
+
+		gi.dprintf("To revert back to defaults, type 'restore'\n");
+
 	}
 }
 
 // for testing purposes
-void Cmd_RestoreMagic(edict_t* ent) {
+void Cmd_Restore_Defaults(edict_t* ent) {
+	
 	ent->magic = ent->max_magic;
-	gi.dprintf("Magic has been restored!\n");
+	ent->client->fire_sp = 0;
+	ent->client->jump_sp = 0;
+	ent->client->shield_sp = 0;
+	ent->client->spell_sp = 0;
+
+	gi.dprintf("Magic has been restored! Spells have been deactivated!\n");
 }
 
 /*
@@ -1193,8 +1265,8 @@ void ClientCommand (edict_t *ent)
 		Cmd_PlayerList_f(ent);
 	else if (Q_stricmp(cmd, "spell") == 0)
 		Cmd_Spells(ent);
-	else if (Q_stricmp(cmd, "restoremagic") == 0)
-		Cmd_RestoreMagic(ent);
+	else if (Q_stricmp(cmd, "restore") == 0)
+		Cmd_Restore_Defaults(ent);
 	else	// anything that doesn't match a command will be a chat
 		Cmd_Say_f (ent, false, true);
 }

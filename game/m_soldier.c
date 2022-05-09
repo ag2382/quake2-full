@@ -468,6 +468,10 @@ void soldier_fire (edict_t *self, int flash_number)
 	vec3_t	end;
 	float	r, u;
 	int		flash_index;
+	gclient_t *client;
+
+	// new entity to check if soldier's current enemy is the player
+	client = self->enemy->client;
 
 	if (self->s.skinnum < 2)
 		flash_index = blaster_flash[flash_number];
@@ -503,11 +507,25 @@ void soldier_fire (edict_t *self, int flash_number)
 
 	if (self->s.skinnum <= 1)
 	{
-		monster_fire_blaster (self, start, aim, 5, 600, flash_index, EF_BLASTER);
+		// check if the client is the soldier's enemy AND if the client has the shield spell activated
+		if (client && client->shield_sp == 1) {
+			monster_fire_blaster(self, start, aim, 2, 600, flash_index, EF_BLASTER);
+		}
+		else {
+			monster_fire_blaster(self, start, aim, 5, 600, flash_index, EF_BLASTER);
+		}
 	}
 	else if (self->s.skinnum <= 3)
 	{
-		monster_fire_shotgun (self, start, aim, 2, 1, DEFAULT_SHOTGUN_HSPREAD, DEFAULT_SHOTGUN_VSPREAD, DEFAULT_SHOTGUN_COUNT, flash_index);
+		// check if the client is the soldier's enemy AND if the client has the shield spell activated
+		if (client && client->shield_sp == 1) {
+			monster_fire_shotgun(self, start, aim, 1, 1, DEFAULT_SHOTGUN_HSPREAD, DEFAULT_SHOTGUN_VSPREAD, DEFAULT_SHOTGUN_COUNT, flash_index);
+		}
+		else {
+			monster_fire_shotgun(self, start, aim, 2, 1, DEFAULT_SHOTGUN_HSPREAD, DEFAULT_SHOTGUN_VSPREAD, DEFAULT_SHOTGUN_COUNT, flash_index);
+		}
+		//monster_fire_shotgun(self, start, aim, 2, 1, DEFAULT_SHOTGUN_HSPREAD, DEFAULT_SHOTGUN_VSPREAD, DEFAULT_SHOTGUN_COUNT, flash_index);
+		//gi.dprintf("shotgun\n");
 	}
 	else
 	{
@@ -1190,6 +1208,13 @@ void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dama
 		self->monsterinfo.currentmove = &soldier_move_death5;
 	else
 		self->monsterinfo.currentmove = &soldier_move_death6;
+
+	// enemy drops currency on death
+	if (self->item)
+	{
+		Drop_Item(self, self->item);
+		self->item = NULL;
+	}
 }
 
 
@@ -1216,6 +1241,9 @@ void SP_monster_soldier_x (edict_t *self)
 
 	self->pain = soldier_pain;
 	self->die = soldier_die;
+
+	// assign enemy currency when it spawns
+	self->item = FindItemByClassname("currency_rupees");
 
 	self->monsterinfo.stand = soldier_stand;
 	self->monsterinfo.walk = soldier_walk;

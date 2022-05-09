@@ -263,6 +263,10 @@ void InfantryMachineGun (edict_t *self)
 	vec3_t	forward, right;
 	vec3_t	vec;
 	int		flash_number;
+	gclient_t *client;
+
+	// new entity to check if soldier's current enemy is the player
+	client = self->enemy->client;
 
 	if (self->s.frame == FRAME_attak111)
 	{
@@ -293,7 +297,11 @@ void InfantryMachineGun (edict_t *self)
 		AngleVectors (vec, forward, NULL, NULL);
 	}
 
-	monster_fire_bullet (self, start, forward, 3, 4, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, flash_number);
+	// check if the client is the soldier's enemy AND if the client has the shield spell activated
+	if (client->shield_sp == 1)
+		monster_fire_bullet(self, start, forward, 1, 4, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, flash_number);
+	else
+		monster_fire_bullet(self, start, forward, 3, 4, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, flash_number);
 }
 
 void infantry_sight (edict_t *self, edict_t *other)
@@ -308,7 +316,6 @@ void infantry_dead (edict_t *self)
 	self->movetype = MOVETYPE_TOSS;
 	self->svflags |= SVF_DEADMONSTER;
 	gi.linkentity (self);
-
 	M_FlyCheck (self);
 }
 
@@ -423,6 +430,13 @@ void infantry_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dam
 		self->monsterinfo.currentmove = &infantry_move_death3;
 		gi.sound (self, CHAN_VOICE, sound_die2, 1, ATTN_NORM, 0);
 	}
+
+	// enemy drops currency on death
+	if (self->item)
+	{
+		Drop_Item(self, self->item);
+		self->item = NULL;
+	}
 }
 
 
@@ -522,11 +536,29 @@ void infantry_swing (edict_t *self)
 
 void infantry_smack (edict_t *self)
 {
+
 	vec3_t	aim;
+	qboolean smack;
+	gclient_t* client;
+
+	// new entity to check if soldier's current enemy is the player
+	client = self->enemy->client;
 
 	VectorSet (aim, MELEE_DISTANCE, 0, 0);
-	if (fire_hit (self, aim, (5 + (rand() % 5)), 50))
-		gi.sound (self, CHAN_WEAPON, sound_punch_hit, 1, ATTN_NORM, 0);
+
+	if (client->shield_sp == 1) {
+		smack = fire_hit(self, aim, (2 + (rand() % 2)), 50);
+		if (smack)
+			gi.sound(self, CHAN_WEAPON, sound_punch_hit, 1, ATTN_NORM, 0);
+	}
+	else {
+		smack = fire_hit(self, aim, (5 + (rand() % 5)), 50);
+		if (smack)
+			gi.sound(self, CHAN_WEAPON, sound_punch_hit, 1, ATTN_NORM, 0);
+	}
+
+	/*if (fire_hit (self, aim, (5 + (rand() % 5)), 50))
+		gi.sound (self, CHAN_WEAPON, sound_punch_hit, 1, ATTN_NORM, 0);*/
 }
 
 mframe_t infantry_frames_attack2 [] =
@@ -588,6 +620,9 @@ void SP_monster_infantry (edict_t *self)
 
 	self->pain = infantry_pain;
 	self->die = infantry_die;
+
+	// assign enemy currency when it spawns
+	self->item = FindItemByClassname("currency_rupees");
 
 	self->monsterinfo.stand = infantry_stand;
 	self->monsterinfo.walk = infantry_walk;

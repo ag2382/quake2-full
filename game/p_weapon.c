@@ -28,7 +28,7 @@ static byte		is_silenced;
 
 
 void weapon_grenade_fire (edict_t *ent, qboolean held);
-
+void Blaster_Fireball(edict_t* ent, vec3_t g_offset, int damage, qboolean hyper, int effect);
 
 static void P_ProjectSource (gclient_t *client, vec3_t point, vec3_t distance, vec3_t forward, vec3_t right, vec3_t result)
 {
@@ -606,7 +606,7 @@ void Weapon_Grenade (edict_t *ent)
 		ent->client->ps.gunframe = 16;
 		return;
 	}
-
+	// if the grenade is in the READY state, then prepare for fire
 	if (ent->client->weaponstate == WEAPON_READY)
 	{
 		if ( ((ent->client->latched_buttons|ent->client->buttons) & BUTTON_ATTACK) )
@@ -648,6 +648,7 @@ void Weapon_Grenade (edict_t *ent)
 
 		if (ent->client->ps.gunframe == 11)
 		{
+			// grenade is currently in the player's hand
 			if (!ent->client->grenade_time)
 			{
 				ent->client->grenade_time = level.time + GRENADE_TIMER + 0.2;
@@ -679,6 +680,7 @@ void Weapon_Grenade (edict_t *ent)
 			}
 		}
 
+		// grenade is not held anymore
 		if (ent->client->ps.gunframe == 12)
 		{
 			ent->client->weapon_sound = 0;
@@ -829,7 +831,7 @@ void Blaster_Fire (edict_t *ent, vec3_t g_offset, int damage, qboolean hyper, in
 	VectorScale (forward, -2, ent->client->kick_origin);
 	ent->client->kick_angles[0] = -1;
 
-	fire_blaster (ent, start, forward, damage, 1000, effect, hyper);
+	fire_blaster(ent, start, forward, damage, 1000, effect, hyper);
 
 	// send muzzle flash
 	gi.WriteByte (svc_muzzleflash);
@@ -852,7 +854,11 @@ void Weapon_Blaster_Fire (edict_t *ent)
 		damage = 15;
 	else
 		damage = 10;
-	Blaster_Fire (ent, vec3_origin, damage, false, EF_BLASTER);
+
+	if (ent->client->fire_sp == 0)
+		Blaster_Fire (ent, vec3_origin, damage, false, EF_BLASTER);
+	else
+		Blaster_Fireball (ent, vec3_origin, damage, false, EF_BLASTER);
 	ent->client->ps.gunframe++;
 }
 
@@ -1211,8 +1217,9 @@ void weapon_shotgun_fire (edict_t *ent)
 
 	if (deathmatch->value)
 		fire_shotgun (ent, start, forward, damage, kick, 500, 500, DEFAULT_DEATHMATCH_SHOTGUN_COUNT, MOD_SHOTGUN);
-	else
-		fire_shotgun (ent, start, forward, damage, kick, 500, 500, DEFAULT_SHOTGUN_COUNT, MOD_SHOTGUN);
+	else {
+		fire_shotgun(ent, start, forward, damage, kick, 500, 500, DEFAULT_SHOTGUN_COUNT, MOD_SHOTGUN);
+	}
 
 	// send muzzle flash
 	gi.WriteByte (svc_muzzleflash);
@@ -1432,3 +1439,36 @@ void Weapon_BFG (edict_t *ent)
 
 
 //======================================================================
+
+void Blaster_Fireball(edict_t* ent, vec3_t g_offset, int damage, qboolean hyper, int effect)
+{
+	vec3_t	forward, right;
+	vec3_t	start;
+	vec3_t	offset;
+
+	float	damage_radius = 500;
+
+	if (is_quad)
+		damage *= 4;
+	AngleVectors(ent->client->v_angle, forward, right, NULL);
+	VectorSet(offset, 24, 8, ent->viewheight - 8);
+	VectorAdd(offset, g_offset, offset);
+	P_ProjectSource(ent->client, ent->s.origin, offset, forward, right, start);
+
+	VectorScale(forward, -2, ent->client->kick_origin);
+	ent->client->kick_angles[0] = -1;
+
+	//fireball_blaster(ent, start, forward, damage, 1000, effect, hyper);
+	fire_bfg(ent, start, forward, damage, 1000, damage_radius);
+
+	// send muzzle flash
+	gi.WriteByte(svc_muzzleflash);
+	gi.WriteShort(ent - g_edicts);
+	if (hyper)
+		gi.WriteByte(MZ_HYPERBLASTER | is_silenced);
+	else
+		gi.WriteByte(MZ_BLASTER | is_silenced);
+	gi.multicast(ent->s.origin, MULTICAST_PVS);
+
+	PlayerNoise(ent, start, PNOISE_WEAPON);
+}

@@ -627,6 +627,7 @@ void InitClientPersistant (gclient_t *client)
 	
 	client->pers.magic			= 64;
 	client->pers.max_magic		= 64;	// starting magic amount (from Zelda II - The Adventure of Link)
+	client->pers.rupees			= 0;
 
 	client->pers.connected = true;
 }
@@ -1241,6 +1242,13 @@ void PutClientInServer (edict_t *ent)
 	VectorCopy (ent->s.angles, client->ps.viewangles);
 	VectorCopy (ent->s.angles, client->v_angle);
 
+	// set client's spell duration to 0 by default when spawned in the server
+	// client->fire_time = 0;
+	// client->jump_time = 0;
+	// client->shield_time = 0;
+	// client->spell_time = 0;
+
+
 	// spawn a spectator
 	if (client->pers.spectator) {
 		client->chase_target = NULL;
@@ -1589,13 +1597,13 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 	level.current_entity = ent;
 	client = ent->client;
 
-	if (level.intermissiontime)
+	if (level.intermissiontime)		// LOADING SCREEN??
 	{
 		client->ps.pmove.pm_type = PM_FREEZE;
 		// can exit intermission after five seconds
-		if (level.time > level.intermissiontime + 5.0 
-			&& (ucmd->buttons & BUTTON_ANY) )
-			level.exitintermission = true;
+		if (level.time > level.intermissiontime + 5.0	// if game finishes loading next part
+			&& (ucmd->buttons & BUTTON_ANY) )			// user can press any button to leave loading screen
+			level.exitintermission = true;				// intermission finished
 		return;
 	}
 
@@ -1624,7 +1632,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 		client->ps.pmove.gravity = sv_gravity->value;
 		pm.s = client->ps.pmove;
 
-		// NOT safe to manipulate
+		// pmove is being calculated using player entity's base origin and velocity values
 		for (i=0 ; i<3 ; i++)
 		{
 			pm.s.origin[i] = ent->s.origin[i]*8;
@@ -1636,6 +1644,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 			pm.snapinitial = true;
 		}
 
+		// store button press that executes the pmove
 		pm.cmd = *ucmd;
 
 		pm.trace = PM_trace;	// adds default parms
@@ -1648,11 +1657,17 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 		client->ps.pmove = pm.s;
 		client->old_pmove = pm.s;
 
-		// NOT safe to manipulate
+		// entity executes the pmove based on calculations to make it work with the game engine
 		for (i=0 ; i<3 ; i++)
 		{
 			ent->s.origin[i] = pm.s.origin[i]*0.125;
 			ent->velocity[i] = pm.s.velocity[i]*0.125;
+
+			// IF YOU'RE MOVING UP IN THE Z-DIRECTION (jumping) WITH THE JUMP SPELL ACTIVATED
+			if (i == 2 && ent->client->jump_sp == 1)
+				// MANIPULATE THE PLAYER'S JUMP HEIGHT
+				ent->velocity[i] += 5;
+
 		}
 
 		VectorCopy (pm.mins, ent->mins);
@@ -1662,7 +1677,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 		client->resp.cmd_angles[1] = SHORT2ANGLE(ucmd->angles[1]);
 		client->resp.cmd_angles[2] = SHORT2ANGLE(ucmd->angles[2]);
 
-		// WHERE JUMP PHYSICS HAPPEN
+		// WHERE JUMP PHYSICS HAPPEN (SUPPOSEDLY)
 		if (ent->groundentity && !pm.groundentity && (pm.cmd.upmove >= 10) && (pm.waterlevel == 0))
 		{
 			gi.sound(ent, CHAN_VOICE, gi.soundindex("*jump1.wav"), 1, ATTN_NORM, 0); // play jump sound
@@ -1757,6 +1772,9 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 	}
 }
 
+void Client_HighJump(edict_t* ent) {
+	gi.dprintf("in client_highjump\n");
+}
 
 /*
 ==============

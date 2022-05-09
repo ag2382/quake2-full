@@ -473,6 +473,52 @@ void SV_CalcBlend (edict_t *ent)
 			SV_AddBlend (0.4, 1, 0.4, 0.04, ent->client->ps.blend);
 	}
 
+	/*
+	==================
+	ADDITIONS FOR SPELL HANDLING
+	==================
+	*/
+
+	// FIRE
+	if (ent->client->fire_framenum > level.framenum)
+	{
+		remaining = ent->client->fire_framenum - level.framenum;
+		if (remaining == 30)	// beginning to fade
+			gi.sound(ent, CHAN_ITEM, gi.soundindex("items/deactivate_spell.wav"), 1, ATTN_NORM, 0);
+		if (remaining > 30 || (remaining & 4))
+			SV_AddBlend(0, 0, 1, 0.08, ent->client->ps.blend);
+	}
+
+	// JUMP
+	else if (ent->client->jump_framenum > level.framenum)
+	{
+		remaining = ent->client->jump_framenum - level.framenum;
+		if (remaining == 30)	// beginning to fade
+			gi.sound(ent, CHAN_ITEM, gi.soundindex("items/deactivate_spell.wav"), 1, ATTN_NORM, 0);
+		if (remaining > 30 || (remaining & 4))
+			SV_AddBlend(0, 0, 1, 0.08, ent->client->ps.blend);
+	}
+
+	// SHIELD
+	else if (ent->client->shield_framenum > level.framenum)
+	{
+		remaining = ent->client->shield_framenum - level.framenum;
+		if (remaining == 30)	// beginning to fade
+			gi.sound(ent, CHAN_ITEM, gi.soundindex("items/deactivate_spell.wav"), 1, ATTN_NORM, 0);
+		if (remaining > 30 || (remaining & 4))
+			SV_AddBlend(0, 0, 1, 0.08, ent->client->ps.blend);
+	}
+
+	// SPELL
+	else if (ent->client->spell_framenum > level.framenum)
+	{
+		remaining = ent->client->spell_framenum - level.framenum;
+		if (remaining == 30)	// beginning to fade
+			gi.sound(ent, CHAN_ITEM, gi.soundindex("items/deactivate_spell.wav"), 1, ATTN_NORM, 0);
+		if (remaining > 30 || (remaining & 4))
+			SV_AddBlend(0, 0, 1, 0.08, ent->client->ps.blend);
+	}
+
 	// add for damage
 	if (ent->client->damage_alpha > 0)
 		SV_AddBlend (ent->client->damage_blend[0],ent->client->damage_blend[1]
@@ -618,6 +664,7 @@ void P_WorldEffects (void)
 	//
 	if (old_waterlevel && ! waterlevel)
 	{
+		gi.cprintf(current_player, PRINT_HIGH, "Zora Tunic is no longer in play\n");
 		PlayerNoise(current_player, current_player->s.origin, PNOISE_SELF);
 		gi.sound (current_player, CHAN_BODY, gi.soundindex("player/watr_out.wav"), 1, ATTN_NORM, 0);
 		current_player->flags &= ~FL_INWATER;
@@ -628,6 +675,7 @@ void P_WorldEffects (void)
 	//
 	if (old_waterlevel != 3 && waterlevel == 3)
 	{
+		gi.cprintf(current_player, PRINT_HIGH, "Zora Tunic is currently in play\n");
 		gi.sound (current_player, CHAN_BODY, gi.soundindex("player/watr_un.wav"), 1, ATTN_NORM, 0);
 	}
 
@@ -652,6 +700,9 @@ void P_WorldEffects (void)
 	//
 	if (waterlevel == 3)
 	{
+		// if player has jacket armor equipped while in the water, then activate the swim flag to prevent him from taking damage?
+
+
 		// breather or envirosuit give air
 		if (breather || envirosuit)
 		{
@@ -672,6 +723,7 @@ void P_WorldEffects (void)
 		// if out of air, start drowning
 		if (current_player->air_finished < level.time)
 		{	// drown!
+			gi.cprintf(current_player, PRINT_HIGH, "You are beginning to drown\n");
 			if (current_player->client->next_drown_time < level.time 
 				&& current_player->health > 0)
 			{
