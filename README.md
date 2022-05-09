@@ -18,10 +18,17 @@ This mod changes Quake II to make it play more like a game from Nintendo's iconi
 ### Upgradable weapons
 
 ### 5 spells to cast
-Players can choose from 5 different spells to activate during a playthrough. The spell system is derived from **"Zelda II: The Adventure of Link"** 
-To see how this system works in more detail, open the console by pressing tilde (~) and type "spell". You should see the following:
+Players can choose from 5 different spells to activate during a playthrough, each with its own specified cost. The spell system is derived from **"Zelda II: The Adventure of Link"** To see how this system works in more detail, open the console by pressing tilde (~) and type "spell". You should see the following:
 
 ![image](https://user-images.githubusercontent.com/90282143/167352895-158aae8b-4fd3-42d3-b364-92eb1a03d1c4.png)
+
+The player starts off with 64 magic points, the default amount that Link has in the beginning of Zelda II. Each spell will be occupied with a description, followed by in-game screenshots to showcase their functionality.
+
+* Fire
+* Jump
+* Life
+* Shield
+* Spell
 
 ### Implement shop, with rupees as main source of currency
 
