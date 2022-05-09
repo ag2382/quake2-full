@@ -17,7 +17,10 @@ This mod changes Quake II to make it play more like a game from Nintendo's iconi
 * 3 types of functional armor
 
 ## Zelda Weapons
-The blaster has been replaced by the master sword. Each time you shoot the blaster, the bolt acts as a "sword beam". This is one of Link's recurring sword skills in the Zelda series. The bolt now disappears after travelling a set distance from the player, given that it does not hit any surface or entity. [WIP]
+* Blaster --> Master Sword (WIP)
+  * Each time you shoot the blaster, the bolt acts as a "sword beam". This is one of Link's recurring sword skills in the Zelda series. The bolt now disappears after travelling a set distance from the player, given that it does not hit any surface or entity.
+
+* Other essential Zelda weapons like the boomerang, bow and arrow, and hookshot have not been fully implemented
 
 ## Weapon Upgrades
 
