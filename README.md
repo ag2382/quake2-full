@@ -28,16 +28,16 @@ The player starts off with 64 magic points, the default amount that Link has in 
 * FIRE <img src = "https://user-images.githubusercontent.com/90282143/167357467-9837de00-9236-4491-b7a4-3ea8f9c37bd0.png" width = "20" height = "20"> <br />
 The 'fire' spell allows the player to shoot fireballs out of the sword from a distance. In the context of Quake II, the particles shot from the BFG are used to portray Link's fireballs.
 
-* JUMP <img src = "https://user-images.githubusercontent.com/90282143/167356941-f19b8dcf-07e6-45fd-bc7a-5bdda1118803.png" width = "20" height = "20"> <br />
+* JUMP <img src = "https://user-images.githubusercontent.com/90282143/167358229-70b3dd42-8935-44a3-bae2-0c60232a0505.png" width = "20" height = "20"> <br />
 
 
-* LIFE <img src = "https://user-images.githubusercontent.com/90282143/167357160-bad759af-77d7-407c-8bff-bf2d9fd1a86e.png" width = "20" height = "20"> <br />
+* LIFE <img src = "https://user-images.githubusercontent.com/90282143/167358369-dd026533-2177-4f59-884f-6d635e127be5.png" width = "20" height = "20"> <br />
 
 
-* SHIELD <img src = "https://user-images.githubusercontent.com/90282143/167357215-b0378adf-0894-4740-b8dc-70d72ddf8365.png" width = "20" height = "20"> <br />
+* SHIELD <img src = "https://user-images.githubusercontent.com/90282143/167358395-8bf3579b-dd50-4961-b0de-4fb9beafe7a0.png" width = "20" height = "20"> <br />
 
 
-* SPELL <img src = "https://user-images.githubusercontent.com/90282143/167357318-7569d747-6f9d-4af8-82e7-3ed950807b66.png" width = "20" height = "20"> <br />
+* SPELL <img src = "https://user-images.githubusercontent.com/90282143/167358419-2c934e31-40ce-47c1-b820-f4484006d0b4.png" width = "20" height = "20"> <br />
 
 
 ### Implement shop, with rupees as main source of currency
