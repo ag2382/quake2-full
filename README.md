@@ -118,5 +118,5 @@ Zora Tunic ~ allows player to breathe underwater
   * The Legend of Zelda: Ocarina of Time
   * Super Smash Bros. Melee
 * Custom sound effects for rupee collecting and spell activation
-* Duration-based spells include UI elements that are fully functional in-game
+* Duration-based spells and rupees include UI elements that are fully functional in-game
 * "Easy" mode damage scaling has been removed
