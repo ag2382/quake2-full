@@ -37,8 +37,9 @@ for 15 seconds:
 * SHIELD
 * SPELL
 
-All spells include custom UI elements that are fully functional in-game. The spell system is derived from "Zelda II: The Adventure of Link". <br />
-To see how this system works in more detail, open the console by pressing tilde (~) and type 'spell'. You should see the following:
+The spell system is derived from "Zelda II: The Adventure of Link". To see how the spell system works in more detail, open the console by pressing tilde (~) and type 'spell'. You should see the following:
+
+![image](https://user-images.githubusercontent.com/90282143/167384279-6d75a20f-bcda-46b4-b44b-cd8a1915de70.png)
 
 The player starts off with 64 magic points, the default amount that Link has in the beginning of Zelda II. Each spell will be occupied with a description, 
 followed by in-game screenshots to showcase their functionality.
