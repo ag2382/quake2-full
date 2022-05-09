@@ -20,7 +20,7 @@ This mod changes Quake II to make it play more like a game from Nintendo's iconi
 ### 5 spells to cast
 Players can choose from 5 different spells to use throughout the course of a playthrough. The spell system is derived from **"Zelda II: The Adventure of Link"** To see which spells that you can use in more detail, open the console by pressing tilde (~) and type "spell". You should see the following:
 
-![image](https://user-images.githubusercontent.com/90282143/167352732-ee17cb35-430e-4dfa-bf76-ee1b1f83fda9.png)
+![image](https://user-images.githubusercontent.com/90282143/167352895-158aae8b-4fd3-42d3-b364-92eb1a03d1c4.png)
 
 ### Implement shop, with rupees as main source of currency
 
