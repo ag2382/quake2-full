@@ -24,14 +24,14 @@ Players can choose from 5 different spells to activate during a playthrough, eac
 
 The player starts off with 64 magic points, the default amount that Link has in the beginning of Zelda II. Each spell will be occupied with a description, followed by in-game screenshots to showcase their functionality.
 
-* Fire <br />
+* FIRE <br />
 ![image](https://user-images.githubusercontent.com/90282143/167354547-69ac80e6-d6ec-459e-8db5-1e511ba8d812.png) <br />
 This
 
-* Jump
-* Life
-* Shield
-* Spell
+* JUMP
+* LIFE
+* SHIELD
+* SPELL
 
 ### Implement shop, with rupees as main source of currency
 
