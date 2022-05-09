@@ -28,6 +28,8 @@ The player starts off with 64 magic points, the default amount that Link has in 
 * FIRE <br /> 
 <img src = "https://user-images.githubusercontent.com/90282143/167357467-9837de00-9236-4491-b7a4-3ea8f9c37bd0.png" width = "50" height = "50"> <br />
 The 'fire' spell allows the player to shoot fireballs out of the sword from a distance. In the context of Quake II, the particles shot from the BFG are used to portray Link's fireballs.
+![quake00](https://user-images.githubusercontent.com/90282143/167359836-f1fa94a4-02a3-487b-a238-d4ed521de526.png)
+
 
 * JUMP <br />
 <img src = "https://user-images.githubusercontent.com/90282143/167358229-70b3dd42-8935-44a3-bae2-0c60232a0505.png" width = "50" height = "50"> <br />
