@@ -31,11 +31,13 @@ Not fully implemented yet :(
 ## 5 Spells to cast
 
 Players can choose from 5 different spells to activate during a playthrough, each with its own specified cost. Four of these spells have a set duration
-for 15 seconds:
-* FIRE
-* JUMP
-* SHIELD
-* SPELL
+for 15 seconds, which are indicated with an hourglass:
+* FIRE <img src = "https://user-images.githubusercontent.com/90282143/167449483-507bf543-18f2-46bc-ba14-743009907889.png" width="10" height="19"> <br />
+* JUMP <img src = "https://user-images.githubusercontent.com/90282143/167449483-507bf543-18f2-46bc-ba14-743009907889.png" width="10" height="19"> <br />
+* LIFE
+* SHIELD <img src = "https://user-images.githubusercontent.com/90282143/167449483-507bf543-18f2-46bc-ba14-743009907889.png" width="10" height="19"> <br />
+* SPELL <img src = "https://user-images.githubusercontent.com/90282143/167449483-507bf543-18f2-46bc-ba14-743009907889.png" width="10" height="19"> <br />
+
 
 The spell system is derived from "Zelda II: The Adventure of Link". To see how the spell system works in more detail, open the console by pressing tilde (~) and type 'spell'. You should see the following:
 
