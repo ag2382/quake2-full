@@ -25,23 +25,19 @@ Players can choose from 5 different spells to activate during a playthrough, eac
 
 The player starts off with 64 magic points, the default amount that Link has in the beginning of Zelda II. Each spell will be occupied with a description, followed by in-game screenshots to showcase their functionality.
 
-* FIRE <img src = "https://user-images.githubusercontent.com/90282143/167357467-9837de00-9236-4491-b7a4-3ea8f9c37bd0.png" width = "20" height = "20" > <br />
+* FIRE <img src = "https://user-images.githubusercontent.com/90282143/167357467-9837de00-9236-4491-b7a4-3ea8f9c37bd0.png" width = "20" height = "20"> <br />
 The 'fire' spell allows the player to shoot fireballs out of the sword from a distance. In the context of Quake II, the particles shot from the BFG are used to portray Link's fireballs.
 
-* JUMP <br />
-![image](https://user-images.githubusercontent.com/90282143/167356941-f19b8dcf-07e6-45fd-bc7a-5bdda1118803.png)
+* JUMP <img src = "https://user-images.githubusercontent.com/90282143/167356941-f19b8dcf-07e6-45fd-bc7a-5bdda1118803.png" width = "20" height = "20"> <br />
 
 
-* LIFE <br />
-![image](https://user-images.githubusercontent.com/90282143/167357160-bad759af-77d7-407c-8bff-bf2d9fd1a86e.png)
+* LIFE <img src = "https://user-images.githubusercontent.com/90282143/167357160-bad759af-77d7-407c-8bff-bf2d9fd1a86e.png" width = "20" height = "20"> <br />
 
 
-* SHIELD <br />
-![image](https://user-images.githubusercontent.com/90282143/167357215-b0378adf-0894-4740-b8dc-70d72ddf8365.png)
+* SHIELD <img src = "https://user-images.githubusercontent.com/90282143/167357215-b0378adf-0894-4740-b8dc-70d72ddf8365.png" width = "20" height = "20"> <br />
 
 
-* SPELL [WIP] <br />
-![image](https://user-images.githubusercontent.com/90282143/167357318-7569d747-6f9d-4af8-82e7-3ed950807b66.png)
+* SPELL <img src = "https://user-images.githubusercontent.com/90282143/167357318-7569d747-6f9d-4af8-82e7-3ed950807b66.png" width = "20" height = "20"> <br />
 
 
 ### Implement shop, with rupees as main source of currency
