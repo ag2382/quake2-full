@@ -48,7 +48,7 @@ followed by in-game screenshots to showcase their functionality.
 
 ## FIRE <img src = "https://user-images.githubusercontent.com/90282143/167382004-8b1d88ab-ee59-43b0-8a20-acf9e109cf5a.png" width="30" height="30">
 The 'fire' spell allows the player to shoot fireballs out of the sword from a distance. 
-In the context of Quake II, the particles shot from the BFG are used to portray Link's fireballs.
+In Quake II, the particles shot from the BFG are used to portray Link's fireballs.
 
 Default: <br />
 <img src = "https://user-images.githubusercontent.com/90282143/167382923-dfedd679-be14-4973-8d2c-77a94f51ab26.png" width="500" height="375">
