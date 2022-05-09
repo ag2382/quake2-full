@@ -2,7 +2,7 @@
 
 Final Project - Quake II: Zelda Edition
 
-This mod changes Quake II to make it play more like a game from Nintendo's iconic **"The Legend of Zelda"** series. Elements and mechanics from both the 2D games and 3D games have been implemented to add to the experience.
+This mod changes Quake II to make it play more like a game from Nintendo's iconic "The Legend of Zelda" series. Elements and mechanics from both the 2D games and 3D games have been implemented to add to the experience.
 
 ## Common Deliverables
 * Desktop shortcut to launch mod
