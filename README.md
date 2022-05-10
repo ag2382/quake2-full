@@ -3,11 +3,11 @@
 This mod changes Quake II to make it play more like a game from Nintendo's iconic "The Legend of Zelda" series. Elements and mechanics from both the 2D games and 3D games have been implemented to add to the experience.
 
 ## Common Deliverables
-* Desktop shortcut to launch mod
-* Separate folder containing files needed for mod to work
-* README file that explains mod in detail and shows how to test deliverables
-* In-game help screen to explain mod changes
-* UI updates reflecting project deliverables
+* Shortcut that Auto-Launches your Mod
+* Mod in a Separate Folder
+* README file in GIT that explains HOWTO install and play / test your mod
+* UI updates reflecting Personal Deliverables
+* Help Screen to detail how to play your mod in game
 
 ## Project Deliverables
 * Replace Quake II weapons with Zelda Weapons
@@ -15,6 +15,9 @@ This mod changes Quake II to make it play more like a game from Nintendo's iconi
 * 5 spells to cast
 * Implement shop, with rupees as main source of currency
 * 3 types of functional armor
+
+## HOW TO INSTALL
+* Create a folder 
 
 ## Zelda Weapons
 
