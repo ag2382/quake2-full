@@ -29,6 +29,9 @@ This mod changes Quake II to make it play more like a game from Nintendo's iconi
     * Each time you shoot the blaster, the bolt acts as a "sword beam". This is one of Link's recurring sword skills in the Zelda series. The bolt now 
 disappears after travelling a set distance from the player, given that it does not hit any surface or entity. <br />
 
+* Railgun --> Magical Rod
+   * This is used for Link's 'SPELL' spell.
+
 * Other essential Zelda weapons like the boomerang, bow and arrow, and hookshot have not been fully implemented
 
 ## Weapon Upgrades
@@ -103,8 +106,9 @@ Spell Activation: <br />
 Here, the player takes 29 damage.
 
 
-## SPELL (WIP) <img src = "https://user-images.githubusercontent.com/90282143/167382237-f227cb8d-26da-4651-8207-a27b06f1cb67.png" width="30" height="30">
-The 'spell' spell allows the player to turn several enemies into much weaker ones. It has not been fully implemented yet.
+## SPELL <img src = "https://user-images.githubusercontent.com/90282143/167382237-f227cb8d-26da-4651-8207-a27b06f1cb67.png" width="30" height="30">
+The 'spell' spell allows the player to turn several enemies into Barracuda Sharks, which are the Quake II equivalent of the 'Bot' enemies. The railgun has been modified to work with this spell in mind. Whenever a slug shot from the railgun comes into contact with any enemy entity, it will transform into a Barracuda Shark. The Barracuda Shark will sustain damage once the spell is deactivated. This spell works to varying success. <br /> <br />
+<img src = "https://user-images.githubusercontent.com/90282143/167652283-18d7fec3-2771-4aa8-aec7-ffb7630c274a.png" width="500" height="375"> <br />
 
 
 ## Shop + Rupees <img src = "https://user-images.githubusercontent.com/90282143/167382384-d466392a-c149-46f1-95a4-29adc6c9d09b.png" width="24" height="30">
