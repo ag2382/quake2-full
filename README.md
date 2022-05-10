@@ -121,8 +121,7 @@ The shop has not been fully implemented yet.
 
 ## 3 types of functional armor
 Only one armor type has been worked on, although not fully implemented yet
-
-Zora Tunic ~ allows player to breathe underwater
+* Zora Tunic ~ allows player to breathe underwater
 
 ## Other Changes
 * Player marine voice lines replaced with Link voice lines ripped from these games:
