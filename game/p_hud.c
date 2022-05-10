@@ -390,6 +390,7 @@ void G_SetStats (edict_t *ent)
 	gitem_t		*item;
 	int			index, cells;
 	int			power_armor_type;
+	edict_t		*it_ent;
 
 	//
 	// health
@@ -513,10 +514,12 @@ void G_SetStats (edict_t *ent)
 	// SPELL
 	else if (ent->client->spell_framenum > level.framenum)
 	{
+		//item = FindItem("Railgun");
 		ent->client->ps.stats[STAT_TIMER_ICON] = gi.imageindex("sp_spell");
 		ent->client->ps.stats[STAT_TIMER] = (ent->client->spell_framenum - level.framenum) / 10;
-		if (ent->client->ps.stats[STAT_TIMER] == 0) 	// once the timer runs out
+		if (ent->client->ps.stats[STAT_TIMER] == 0) {	// once the timer runs out
 			ent->client->spell_sp = 0;					// revert back to default
+		}
 	}
 	else
 	{

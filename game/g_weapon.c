@@ -669,6 +669,9 @@ void fire_rail (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick
 	edict_t		*ignore;
 	int			mask;
 	qboolean	water;
+	gclient_t	*client;
+
+	client = self->client;
 
 	VectorMA (start, 8192, aimdir, end);
 	VectorCopy (start, from);
@@ -691,7 +694,12 @@ void fire_rail (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick
 			else
 				ignore = NULL;
 
-			if ((tr.ent != self) && (tr.ent->takedamage))
+			// if target entity is not the player AND said target entity is taking damage, while player has 'spell' active
+			if ((tr.ent != self) && (tr.ent->takedamage) && (client->spell_sp == 1)) {
+				Turn_To_Flipper(tr.ent, self, self); // target entity will turn into a flipper
+			}
+
+			else
 				T_Damage (tr.ent, self, self, aimdir, tr.endpos, tr.plane.normal, damage, kick, 0, MOD_RAILGUN);
 		}
 

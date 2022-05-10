@@ -1039,6 +1039,10 @@ void Spell_Active(edict_t* ent) {
 
 void Spell_Spell(edict_t* ent) {
 
+	gitem_t *it;
+	int		index;
+	edict_t* it_ent;
+
 	ent->client->spell_sp = 1;
 	gi.dprintf("Link can turn enemies into bots\n");
 

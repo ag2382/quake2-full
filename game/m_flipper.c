@@ -401,3 +401,31 @@ void SP_monster_flipper (edict_t *self)
 
 	swimmonster_start (self);
 }
+
+/*
+
+==================
+
+Turn_To_Flipper()
+
+With 'spell' active, enemies will turn into 
+Barracuda Sharks if hit by the railgun
+
+You need a target entity and an attacker entity
+* target = enemy
+* attacker = client
+
+==================
+
+*/
+
+void Turn_To_Flipper(edict_t* targ, edict_t *inflictor, edict_t* attacker) {
+
+	edict_t* enemy;
+	gclient_t* client;
+	enemy = targ;
+	client = attacker;
+
+	if ((targ->svflags & SVF_MONSTER))
+		SP_monster_flipper(targ);
+}
