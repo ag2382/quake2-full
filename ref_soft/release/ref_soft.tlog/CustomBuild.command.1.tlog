@@ -1,0 +1,18 @@
+^D:\CODE WORKSPACES\GIT\IT266-QUAKE2\QUAKE2-FULL\REF_SOFT\R_ACLIPA.ASM
+ml /c /Cp /coff /Fo.\..\release\r_aclipa.obj /Zm /Zi D:\Code Workspaces\Git\IT266-Quake2\quake2-full\ref_soft\r_aclipa.asm
+^D:\CODE WORKSPACES\GIT\IT266-QUAKE2\QUAKE2-FULL\REF_SOFT\R_DRAW16.ASM
+ml /c /Cp /coff /Fo.\..\release\r_draw16.obj /Zm /Zi D:\Code Workspaces\Git\IT266-Quake2\quake2-full\ref_soft\r_draw16.asm
+^D:\CODE WORKSPACES\GIT\IT266-QUAKE2\QUAKE2-FULL\REF_SOFT\R_DRAWA.ASM
+ml /c /Cp /coff /Fo.\..\release\r_drawa.obj /Zm /Zi D:\Code Workspaces\Git\IT266-Quake2\quake2-full\ref_soft\r_drawa.asm
+^D:\CODE WORKSPACES\GIT\IT266-QUAKE2\QUAKE2-FULL\REF_SOFT\R_EDGEA.ASM
+ml /c /Cp /coff /Fo.\..\release\r_edgea.obj /Zm /Zi D:\Code Workspaces\Git\IT266-Quake2\quake2-full\ref_soft\r_edgea.asm
+^D:\CODE WORKSPACES\GIT\IT266-QUAKE2\QUAKE2-FULL\REF_SOFT\R_POLYSA.ASM
+ml /c /Cp /coff /Fo.\..\release\r_polysa.obj /Zm /Zi D:\Code Workspaces\Git\IT266-Quake2\quake2-full\ref_soft\r_polysa.asm
+^D:\CODE WORKSPACES\GIT\IT266-QUAKE2\QUAKE2-FULL\REF_SOFT\R_SCANA.ASM
+ml /c /Cp /coff /Fo.\..\release\r_scana.obj /Zm /Zi D:\Code Workspaces\Git\IT266-Quake2\quake2-full\ref_soft\r_scana.asm
+^D:\CODE WORKSPACES\GIT\IT266-QUAKE2\QUAKE2-FULL\REF_SOFT\R_SPR8.ASM
+ml /c /Cp /coff /Fo.\..\release\r_spr8.obj /Zm /Zi D:\Code Workspaces\Git\IT266-Quake2\quake2-full\ref_soft\r_spr8.asm
+^D:\CODE WORKSPACES\GIT\IT266-QUAKE2\QUAKE2-FULL\REF_SOFT\R_SURF8.ASM
+ml /c /Cp /coff /Fo.\..\release\r_surf8.obj /Zm /Zi D:\Code Workspaces\Git\IT266-Quake2\quake2-full\ref_soft\r_surf8.asm
+^D:\CODE WORKSPACES\GIT\IT266-QUAKE2\QUAKE2-FULL\REF_SOFT\R_VARSA.ASM
+ml /c /Cp /coff /Fo.\..\release\r_varsa.obj /Zm /Zi D:\Code Workspaces\Git\IT266-Quake2\quake2-full\ref_soft\r_varsa.asm
