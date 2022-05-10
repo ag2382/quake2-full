@@ -17,7 +17,11 @@ This mod changes Quake II to make it play more like a game from Nintendo's iconi
 * 3 types of functional armor
 
 ## HOW TO INSTALL
-* Create a folder 
+1. Create a folder in the directory containing Quake 2. Rename your folder to "q2zelda".
+2. Copy all the contents from the "Link" folder into the "q2zelda" folder.
+3. Create a new shortcut of quake2.exe. Send the shortcut to your desktop.
+4. Right click on the shortcut and go to "Properties". Look for the target field and enter " +set game q2zelda" at the end of the line.
+5. **OPTIONAL** ~ change the icon of the shortcut using the provided file: "triforce.ico"
 
 ## Zelda Weapons
 
